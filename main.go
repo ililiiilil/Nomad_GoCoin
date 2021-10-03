@@ -1,13 +1,20 @@
 package main
 
 import (
+	"crypto/sha256"
 	"fmt"
-
-	"github.com/nomadcoders/nomadcoin/person"
 )
 
+type block struct {
+	data     string
+	hash     string
+	prevHash string
+}
+
 func main() {
-	nico := person.Person{}
-	nico.SetDetails("nico", 21)
-	fmt.Println("Maing 'nico'", nico)
+	genesisBlock := block{"Genesis Block", "", ""}
+	hash := sha256.Sum256([]byte(genesisBlock.data + genesisBlock.prevHash))
+	hexHash := fmt.Sprintf("%x", hash)
+	genesisBlock.hash = hexHash
+	fmt.Println(genesisBlock)
 }
